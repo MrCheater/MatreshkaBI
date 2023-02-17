@@ -8,12 +8,25 @@ const months = require('../../data/months.json');
 class Api {
   constructor(express) {
     this.express = express;
-    this.db = new duckdb.Database(path.join(__dirname));
+    this.db = new duckdb.Database(':memory:');
   }
 
   init() {
-    this.express.get("/api/get", (req, res) => {
-      res.send({ i: 10 });
+    this.express.get("/api/get", async (req, res) => {
+      res.send(
+        await new Promise(
+          (resolve, reject) => {
+            this.db.all(
+              `SELECT DISTINCT "Регион" FROM read_csv_auto('data/m1.p1.csv')`
+            , function(err, res) {
+              if (err) {
+                return reject(err);
+              }
+              resolve(res)
+            });
+          }
+        )
+      );
     });
     this.express.get("/api/filters", (req, res) => {
       res.json({
