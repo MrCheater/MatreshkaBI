@@ -108,3 +108,9 @@ dist
 .idea/
 .yarn/
 
+
+# Custom
+.next/
+.idea/
+.yarn/
+

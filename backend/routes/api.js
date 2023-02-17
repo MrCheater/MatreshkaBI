@@ -1,12 +1,10 @@
-const duckdb = require('duckdb');
-const path = require('path')
+const duckdb = require("duckdb");
+const path = require("path");
 
 class Api {
   constructor(express) {
     this.express = express;
-    this.db = new duckdb.Database(path.join(
-      __dirname,
-    ));
+    this.db = new duckdb.Database(path.join(__dirname));
   }
 
   init() {
