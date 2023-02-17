@@ -29,7 +29,7 @@
   "scripts": {
     "build": "next build",
     "start": "node index.js",
-    "lint": "eslint qqq --ext=.js,.ts,.jsx,.tsx",
+    "lint": "eslint . --ext=.js,.ts,.jsx,.tsx",
     "prettier": "prettier --write \"**/**.{ts,tsx,js,jsx,json}\"",
     "prettier:check": "prettier --list-different \"**/**.{ts,tsx,js,jsx,json}\""
   }
