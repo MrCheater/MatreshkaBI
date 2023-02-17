@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,7 +20,9 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+export function VerticalBar({ url, options }) {
+
+const optionsDefault = {
   responsive: true,
   plugins: {
     legend: {
@@ -33,7 +35,7 @@ export const options = {
   },
 };
 
-export const data = {
+const dataDefault = {
   labels: ['Red', 'Orange', 'Blue'],
   datasets: [
       {
@@ -55,6 +57,18 @@ export const data = {
   ]
 }
 
-export function VerticalBar() {
-  return <Bar options={options} data={data} />;
+const [data, setData] = useState(dataDefault);
+
+useEffect(async () => {
+  if (url) {
+    const result = await fetch(url);
+    const data = result.json();
+
+  if (data) {
+    setData(data);
+  }
+  }
+});
+
+  return <Bar options={options ?? optionsDefault} data={data} />;
 }
