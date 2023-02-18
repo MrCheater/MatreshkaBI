@@ -110,10 +110,48 @@ class Api {
         );
       });
 
+      const ageDistribution = await new Promise((resolve, reject) => {
+        if (req.query.region == null) {
+          return this.db.all(
+            `
+            SELECT 
+                'Все регионы' as region, 
+                SUM("total") as total, 
+                SUM("range_7_13") as range_7_13, 
+                SUM("range_14_30") as range_14_30, 
+                SUM("range_31_54") as range_31_54, 
+                SUM("range_55") as range_55 
+            FROM read_csv_auto('data/ageDistribution.csv')
+          `,
+            function (err, res) {
+              if (err) {
+                return reject(err);
+              }
+
+              resolve(res[0]);
+            }
+          );
+        }
+        this.db.all(
+          `
+            SELECT * FROM read_csv_auto('data/ageDistribution.csv')
+            WHERE "region" = '${req.query.region}'
+          `,
+          function (err, res) {
+            if (err) {
+              return reject(err);
+            }
+
+            resolve(res[0]);
+          }
+        );
+      });
+
       res.json({
         map,
         people,
         peopleByRegions,
+        ageDistribution,
       });
     });
     this.express.get("/api/people", async (req, res) => {
