@@ -117,6 +117,7 @@ class Api {
             SELECT 
                 'Все регионы' as region, 
                 SUM("total") as total, 
+                SUM("range_7_13")+SUM("range_14_30")+SUM("range_31_54")+SUM("range_55") as totalRange,                
                 SUM("range_7_13") as range_7_13, 
                 SUM("range_14_30") as range_14_30, 
                 SUM("range_31_54") as range_31_54, 
@@ -134,7 +135,15 @@ class Api {
         }
         this.db.all(
           `
-            SELECT * FROM read_csv_auto('data/ageDistribution.csv')
+            SELECT
+             "region",
+             "total", 
+             "range_7_13"+"range_14_30"+"range_31_54"+"range_55" as totalRange,                
+             "range_7_13", 
+             "range_14_30", 
+             "range_31_54",
+             "range_55"  
+            FROM read_csv_auto('data/ageDistribution.csv')
             WHERE "region" = '${req.query.region}'
           `,
           function (err, res) {
