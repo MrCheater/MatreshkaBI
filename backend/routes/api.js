@@ -87,7 +87,7 @@ class Api {
         this.db.all(
           `
             SELECT region, young, total, (young*100.0)/total as "youngPercent" FROM read_csv_auto('data/people.csv')
-            ORDER BY "youngPercent"
+            ORDER BY "youngPercent" DESC
           `,
           function (err, res) {
             if (err) {
