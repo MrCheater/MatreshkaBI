@@ -156,11 +156,60 @@ class Api {
         );
       });
 
+      const objectDistribution = await new Promise((resolve, reject) => {
+        if (req.query.region == null) {
+          return this.db.all(
+            `
+            SELECT 
+                'Все регионы' as region, 
+                SUM("education") as education,
+                SUM("healthcare") as healthcare,
+                SUM("social") as social,
+                SUM("culture") as culture,
+                SUM("sport") as sport,
+                SUM("nature") as nature,
+                SUM("communal") as communal
+            FROM read_csv_auto('data/objectDistribution.csv')
+          `,
+            function (err, res) {
+              if (err) {
+                return reject(err);
+              }
+
+              resolve(res[0]);
+            }
+          );
+        }
+        this.db.all(
+          `
+            SELECT
+             "region",
+             "education",
+             "healthcare",
+             "social",
+             "culture",
+             "sport",
+             "nature",
+             "communal"
+            FROM read_csv_auto('data/objectDistribution.csv')
+            WHERE "region" = '${req.query.region}'
+          `,
+          function (err, res) {
+            if (err) {
+              return reject(err);
+            }
+
+            resolve(res[0]);
+          }
+        );
+      });
+
       res.json({
         map,
         people,
         peopleByRegions,
         ageDistribution,
+        objectDistribution,
       });
     });
     this.express.get("/api/people", async (req, res) => {
