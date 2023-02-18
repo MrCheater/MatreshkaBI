@@ -62,22 +62,34 @@ class Api {
       };
 
       const people = await new Promise((resolve, reject) => {
+        if (req.query.region == null) {
+          return this.db.all(
+            `
+            SELECT 
+                'Все регионы' as region, 
+                SUM("young") as young, 
+                SUM("total") as total 
+            FROM read_csv_auto('data/people.csv')
+          `,
+            function (err, res) {
+              if (err) {
+                return reject(err);
+              }
+
+              resolve(res[0]);
+            }
+          );
+        }
         this.db.all(
           `
-                SELECT * FROM read_csv_auto('data/people.csv')
-                ${
-                  req.query.region
-                    ? `WHERE "region" = '${req.query.region}'`
-                    : ""
-                }  
-              `,
+            SELECT * FROM read_csv_auto('data/people.csv')
+            WHERE "region" = '${req.query.region}'
+          `,
           function (err, res) {
             if (err) {
               return reject(err);
             }
-            if (res.length > 1) {
-              return resolve(null);
-            }
+
             resolve(res[0]);
           }
         );
@@ -101,7 +113,7 @@ class Api {
       res.json({
         map,
         people,
-        peopleByRegions
+        peopleByRegions,
       });
     });
     this.express.get("/api/people", async (req, res) => {
