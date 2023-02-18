@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import queryString from "query-string";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -21,9 +22,17 @@ export default function Index() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `/api/dashboard-1`,
+        queryString.stringifyUrl({
+          url: `/api/dashboard-1`,
+          query: {
+            region: region === "" ? undefined : region,
+            year: year === "" ? undefined : year,
+            quarter: quarter === "" ? undefined : quarter,
+            month: month === "" ? undefined : month,
+          },
+        })
       );
-      const data = await response.json()
+      const data = await response.json();
 
       setDashboardData(data);
     };
@@ -31,8 +40,8 @@ export default function Index() {
     fetchData();
   }, [region, year, quarter, month]);
 
-  if(dashboardData == null) {
-    return null
+  if (dashboardData == null) {
+    return null;
   }
 
   return (
@@ -49,7 +58,7 @@ export default function Index() {
           setMonth={setMonth}
         />
         <Stack>
-          <Map items={dashboardData.map.items}/>
+          <Map items={dashboardData.map.items} />
         </Stack>
         <Stack direction="row" spacing={4}>
           <Box
