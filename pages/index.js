@@ -4,7 +4,7 @@ import queryString from "query-string";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-
+import { Tabs } from "../components/Tabs";
 import VerticalBar from "../widgets/VerticalBar";
 import HorizontalBar from "../widgets/HorizontalBar";
 import Donut from "../widgets/Donut";
@@ -46,6 +46,7 @@ export default function Index() {
   }
 
   return (
+    <>
     <Container maxWidth="lg">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -93,5 +94,9 @@ export default function Index() {
         </Stack>
       </Box>
     </Container>
+   <Container maxWidth="lg">
+    <Tabs />
+    </Container>
+    </>
   );
 }
