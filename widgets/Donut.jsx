@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import React, { useState, useEffect } from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export {};
 
-export default function Donut({ url }) {
+export default function Donut({ url, options }) {
   const dataDefault = {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [
       {
-        label: "# of Votes",
+        label: '',
         data: [12, 19, 3, 5, 2, 3],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -33,19 +33,34 @@ export default function Donut({ url }) {
       },
     ],
   };
+  
+  const [data, setData] = useState([]);
 
-  const [data, setData] = useState(dataDefault);
+  useEffect(() => {
+  const fetchData = async () => {
+    const response = await fetch(url);
+    const data = await response.json();
 
-  /* useEffect(async () => {
-    if (url) {
-      const result = await fetch(url);
-      const data = result.json();
+    setData(data);
+  };
 
-    if (data) {
-      setData(data);
+  fetchData();
+  }, []);
+
+  let preparedData;
+
+  if (data.length) {
+    preparedData = {
+      ...dataDefault,
+      labels: data?.map((item) => item[options.labels]),
+      datasets: [
+        {
+          ...dataDefault.datasets[0],
+          data: data?.map((item) => item[options.data]),
+        }
+      ],
     }
-    }
-  });*/
+  }
 
-  return <Doughnut data={data} />;
+  return <Doughnut data={preparedData ?? dataDefault} />;
 }

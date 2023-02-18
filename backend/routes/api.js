@@ -66,6 +66,23 @@ class Api {
         },
       });
     });
+    this.express.get("/api/people", async (req, res) => {
+      res.send(
+        await new Promise(
+          (resolve, reject) => {
+            this.db.all(
+              `SELECT * FROM read_csv_auto('data/people.csv')`
+            , function(err, res) {
+              if (err) {
+                return reject(err);
+              }
+              resolve(res)
+            });
+          }
+        )
+      );
+    });
+
   }
 }
 

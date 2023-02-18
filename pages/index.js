@@ -4,6 +4,7 @@ import queryString from "query-string";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import { Tabs } from "../components/Tabs";
 import Button from "@mui/material/Button";
 
 import ReactToPrint from "react-to-print";
@@ -116,6 +117,7 @@ export default function Index() {
           </Box>
         </Stack>
       </Box>
+      <Tabs />
     </Container>
   );
 }
