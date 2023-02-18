@@ -43,7 +43,7 @@ const dataDefault = {
   ]
 }
 
-export function HorizontalBar({ url, options }) {
+export default function HorizontalBar({ url, options }) {
   const dataDefault = {
     labels: ['Red', 'Orange', 'Blue'],
     datasets: [
@@ -85,7 +85,7 @@ export function HorizontalBar({ url, options }) {
   };
   const [data, setData] = useState(dataDefault);
 
-  useEffect(async () => {
+/*  useEffect(async () => {
     if (url) {
       const result = await fetch(url);
       const data = result.json();
@@ -94,7 +94,7 @@ export function HorizontalBar({ url, options }) {
       setData(data);
     }
     }
-  });
+  });*/
 
   return <Bar options={options ?? optionsDefault} data={data} />;
 }

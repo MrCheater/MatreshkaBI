@@ -6,7 +6,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export {};
 
-export function Donut({ url }) {
+export default function Donut({ url }) {
   const dataDefault = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
@@ -36,7 +36,7 @@ export function Donut({ url }) {
   
   const [data, setData] = useState(dataDefault);
 
-  useEffect(async () => {
+ /* useEffect(async () => {
     if (url) {
       const result = await fetch(url);
       const data = result.json();
@@ -45,7 +45,7 @@ export function Donut({ url }) {
       setData(data);
     }
     }
-  });
+  });*/
 
 
   return <Doughnut data={data} />;
