@@ -42,15 +42,9 @@ export default function HorizontalBar({ url, options }) {
     labels: ["Red", "Orange", "Blue"],
     datasets: [
       {
-        label: "Popularity of colours",
+        label: "",
         data: [55, 23, 96],
         backgroundColor: ["rgba(53, 162, 235, 0.5)"],
-        borderWidth: 1,
-      },
-      {
-        label: "Popularity of trends",
-        data: [5, 53, 23],
-        backgroundColor: ["rgba(255, 99, 132, 0.5)"],
         borderWidth: 1,
       },
     ],
@@ -69,22 +63,37 @@ export default function HorizontalBar({ url, options }) {
       },
       title: {
         display: true,
-        text: "Horizontal Bar Chart",
       },
     },
   };
-  const [data, setData] = useState(dataDefault);
+  const [data, setData] = useState([]);
 
-  /*  useEffect(async () => {
-    if (url) {
-      const result = await fetch(url);
-      const data = result.json();
-
-    if (data) {
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+  
       setData(data);
+    };
+  
+    fetchData();
+    }, []);
+  
+    let preparedData;
+  
+    if (data.length) {
+      preparedData = {
+        ...dataDefault,
+        labels: data?.map((item) => item[options.labels]),
+        datasets: [
+          {
+            ...dataDefault.datasets[0],
+            data: data?.map((item) => item[options.data]),
+            label: options.label,
+          }
+        ],
+      }
     }
-    }
-  });*/
 
-  return <Bar options={options ?? optionsDefault} data={data} />;
+  return <Bar options={optionsDefault} data={preparedData ?? dataDefault} />;
 }

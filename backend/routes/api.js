@@ -131,6 +131,24 @@ class Api {
         })
       );
     });
+
+    this.express.get("/api/count-projects-by-region", async (req, res) => {
+      res.send(
+        await new Promise((resolve, reject) => {
+          this.db.all(
+            `SELECT region, SUM(projects) AS Allprojects
+            FROM read_csv_auto('data/m1.p6.csv')
+GROUP BY region`,
+            function (err, res) {
+              if (err) {
+                return reject(err);
+              }
+              resolve(res);
+            }
+          );
+        })
+      );
+    });
   }
 }
 

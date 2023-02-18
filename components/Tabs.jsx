@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Donut from "../widgets/Donut";
+import HorizontalBar from "../widgets/HorizontalBar";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,7 +52,7 @@ export function Tabs() {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <TabsContainer value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Доля молодежи" {...a11yProps(0)} />
-          <Tab label="Волонтёры" {...a11yProps(1)} />
+          <Tab label="Количество форумов соответствующего уровня 2021г" {...a11yProps(1)} />
           <Tab label="Мероприятия" {...a11yProps(2)} />
           <Tab label="Организаторы" {...a11yProps(3)} />
           <Tab label="Проекты" {...a11yProps(4)} />
@@ -61,7 +62,7 @@ export function Tabs() {
         <Donut url={"/api/people"} options={{ labels: "регион", data: "молодежь" }} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <HorizontalBar url={"/api/count-projects-by-region"} options={{ labels: "region", data: "Allprojects", label: "Количество проектов" }}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
