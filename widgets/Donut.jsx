@@ -36,7 +36,7 @@ export function Donut({ url }) {
   
   const [data, setData] = useState(dataDefault);
 
-  useEffect(async () => {
+ /* useEffect(async () => {
     if (url) {
       const result = await fetch(url);
       const data = result.json();
@@ -45,7 +45,7 @@ export function Donut({ url }) {
       setData(data);
     }
     }
-  });
+  });*/
 
 
   return <Doughnut data={data} />;

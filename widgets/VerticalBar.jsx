@@ -59,6 +59,7 @@ const dataDefault = {
 
 const [data, setData] = useState(dataDefault);
 
+/*
 useEffect(async () => {
   if (url) {
     const result = await fetch(url);
@@ -69,6 +70,7 @@ useEffect(async () => {
   }
   }
 });
+*/
 
   return <Bar options={options ?? optionsDefault} data={data} />;
 }

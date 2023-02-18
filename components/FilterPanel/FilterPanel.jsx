@@ -9,16 +9,16 @@ import yearsJSON from "../../data/years.json";
 
 export const FilterPanel = () => {
   const [months, setMonths] = useState(monthsJSON);
-  const [month, setMonth] = useState(months[0] ?? '');
+  const [month, setMonth] = useState('');
 
   const [quarters, setQuarters] = useState(quartersJSON);
-  const [quarter, setQuarter] = useState(quarters[0] ?? '');
+  const [quarter, setQuarter] = useState('');
 
   const [regions, setRegions] = useState(regionsJSON);
-  const [region, setRegion] = useState(regions[0] ?? '');
+  const [region, setRegion] = useState('');
 
   const [years, setYears] = useState(yearsJSON);
-  const [year, setYear] = useState(years[0] ?? '');
+  const [year, setYear] = useState('');
 
   return (
     <Stack
@@ -28,62 +28,62 @@ export const FilterPanel = () => {
       spacing={2}
       >
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">год</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label">Год</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={year}
-          onChange={() => setYear(year)}
+          onChange={(event) => setYear(event.target.value)}
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>{years[0]}</em>
           </MenuItem>
-          {years?.map((year) => <MenuItem value={year}>{year}</MenuItem>)}
+          {years.slice(1).map((year, index) => <MenuItem value={year} key={index}>{year}</MenuItem>)}
         </Select>
       </FormControl>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">месяц</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label">Месяц</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={month}
-          onChange={() => setMonth(month)}
+          onChange={(event) => setMonth(event.target.value)}
           label="месяц"
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>{months[0]}</em>
           </MenuItem>
-          {months?.map((month) => <MenuItem value={month}>{month}</MenuItem>)}
+          {months.slice(1).map((month, index) => <MenuItem value={month} key={index}>{month}</MenuItem>)}
         </Select>
       </FormControl>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">квартал</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label">Квартал</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={quarter}
-          onChange={() => setQuarter(quarter)}
+          onChange={(event) => setQuarter(event.target.value)}
           label="квартал"
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>{quarters[0]}</em>
           </MenuItem>
-          {quarters?.map((quarter) => <MenuItem value={quarter}>{quarter}</MenuItem>)}
+          {quarters.slice(1).map((quarter, index) => <MenuItem value={quarter} key={index}>{quarter}</MenuItem>)}
         </Select>
       </FormControl>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">регионы</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label">Регион</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={region}
-          onChange={() => setRegion(region)}
+          onChange={(event) => setRegion(event.target.value)}
           label="регионы"
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>{regions[0]}</em>
           </MenuItem>
-          {regions?.map((region) => <MenuItem value={region}>{region}</MenuItem>)}
+          {regions.slice(1).map((region, index) => <MenuItem value={region} key={index}>{region}</MenuItem>)}
         </Select>
       </FormControl>
     </Stack>
