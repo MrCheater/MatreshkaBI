@@ -4,6 +4,9 @@ import queryString from "query-string";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+
+import ReactToPrint from 'react-to-print';
 
 import VerticalBar from "../widgets/VerticalBar";
 import HorizontalBar from "../widgets/HorizontalBar";
@@ -11,6 +14,7 @@ import Donut from "../widgets/Donut";
 import Map from "../widgets/Map";
 
 import { FilterPanel } from "../components/FilterPanel";
+//import { Button } from "react-yandex-maps";
 
 export default function Index() {
   const [region, setRegion] = useState("");
@@ -18,6 +22,8 @@ export default function Index() {
   const [quarter, setQuarter] = useState("");
   const [month, setMonth] = useState("");
   const [dashboardData, setDashboardData] = useState(null);
+
+  const ref = React.createRef();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,18 +51,26 @@ export default function Index() {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg"  ref={ref}>
       <Box sx={{ my: 4 }}>
-        <FilterPanel
-          region={region}
-          setRegion={setRegion}
-          year={year}
-          setYear={setYear}
-          quarter={quarter}
-          setQuarter={setQuarter}
-          month={month}
-          setMonth={setMonth}
-        />
+        <Box display="flex" style={{ alignItems: "baseline" }}>
+          <FilterPanel style={{ display: "inline-block" }}
+            region={region}
+            setRegion={setRegion}
+            year={year}
+            setYear={setYear}
+            quarter={quarter}
+            setQuarter={setQuarter}
+            month={month}
+            setMonth={setMonth}
+          ></FilterPanel>
+
+          <ReactToPrint style={{ float: "right" }}
+            trigger={() => <Button style={{ height: 50, marginLeft: "auto" }}>Сохранить в PDF</Button>}
+            content={() => ref.current}
+          />
+        </Box>
+
         <Stack>
           <Map items={dashboardData.map.items} />
         </Stack>
