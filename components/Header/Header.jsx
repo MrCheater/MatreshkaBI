@@ -34,6 +34,10 @@ export function Header() {
           cookies.name == null ?
           <Button onClick={()=>push('/login')} variant="outlined" color="primary">Личный кабинет</Button>:
           <Stack
+          direction="column"
+          alignItems="center"
+          >
+            <Stack
           direction="row"
           alignItems="center"
           justifyContent="space-between"
@@ -42,7 +46,10 @@ export function Header() {
             <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/1.jpg" />
             <h5>Представитель Краснодарского края</h5>
             <Button onClick={()=>removeCookie(['name'])}>Выход</Button>
+            </Stack>
+            <Button component="label">Загрузить данные<input accept="text/*" multiple type="file" hidden/></Button>
           </Stack>
+          
         }
     </Stack>
   );

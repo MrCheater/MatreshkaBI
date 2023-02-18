@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { Tabs } from "../components/Tabs";
 import Button from "@mui/material/Button";
+import axios from 'axios';
 
 import ReactToPrint from "react-to-print";
 
@@ -21,6 +22,8 @@ import OrganizationRange from "../widgets/OrganizationRange";
 
 import { Header } from "../components/Header/Header";
 import { FilterPanel } from "../components/FilterPanel";
+import { CSVLink } from "react-csv";
+import {data_csv} from "./data_csv.js";
 //import { Button } from "react-yandex-maps";
 
 export default function Index() {
@@ -59,13 +62,39 @@ export default function Index() {
 
   const downloadTxtFile = () => {
     // anchor link
-    const element = document.createElement("a");
-    element.href = './../data/ageDistribution.csv'
-    element.download = "data-" + Date.now() + ".csv";
-    // simulate link click
-    document.body.appendChild(element);
-    // Required for this to work in FireFox
-    element.click();
+
+    const link = document.createElement("a");
+    link.target = "_blank";
+    link.download = './../data/ageDistribution.csv'
+    axios
+      .get('./../data/ageDistribution.csv', {
+        responseType: "blob",
+      })
+      .then((res) => {
+        link.href = URL.createObjectURL(
+          new Blob([res.data], { type: "text/csv" })
+        );
+        link.click();
+      });
+  };
+
+  const downloadCSVFromJson = (filename, arrayOfJson) => {
+    // convert JSON to CSV
+    const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+    const header = Object.keys(arrayOfJson[0])
+    let csv = arrayOfJson.map(row => header.map(fieldName => 
+    JSON.stringify(row[fieldName], replacer)).join(','))
+    csv.unshift(header.join(','))
+    csv = csv.join('\r\n')
+  
+    // Create link and download
+    var link = document.createElement('a');
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv));
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -91,10 +120,15 @@ export default function Index() {
             month={month}
             setMonth={setMonth}
           ></FilterPanel>
-
-          <Button style={{ height: 50, marginLeft: "auto" }} onClick={downloadTxtFile}>
+              <CSVLink
+                style={{ float: "right", marginLeft: "auto", "color": "#556cd6" }}
+                data={data_csv}
+                filename={"data.csv"}
+                className="btn btn-primary"
+                target="_blank"
+              >
                 Сохранить в csv
-              </Button>
+              </CSVLink>
           <ReactToPrint
             style={{ float: "right" }}
             trigger={() => (
@@ -152,3 +186,7 @@ export default function Index() {
     </Container>
   );
 }
+/*
+          <Button style={{ height: 50, marginLeft: "auto" }} onClick={downloadTxtFile}>
+                Сохранить в csv
+              </Button>*/
