@@ -1,6 +1,7 @@
 import { Stack, Avatar } from "@mui/material";
 import Image from 'next/image';
 import matreshka from '../../assets/matreshka.jpg';
+import Paper from "@mui/material/Paper";
 
 export function Header() {
   return (
@@ -16,13 +17,13 @@ export function Header() {
       justifyContent="space-between"
       spacing={2}
       >
-        <Image
+        <Paper><Image
       src={matreshka}
       alt="matreshka"
       width={60}
       height={60}
-    />
-        <h3>MatreshkaBI</h3>
+    /></Paper>
+        <h2>MatreshkaBI</h2>
       </Stack>
         <Stack
       direction="row"
