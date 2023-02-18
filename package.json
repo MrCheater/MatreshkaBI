@@ -25,7 +25,8 @@
     "react-dom": "18.2.0",
     "react-hook-geolocation": "^1.1.0",
     "react-yandex-maps": "^4.6.0",
-    "serve-favicon": "2.5.0"
+    "serve-favicon": "2.5.0",
+    "query-string": "8.1.0"
   },
   "devDependencies": {
     "eslint": "8.33.0",
