@@ -8,14 +8,51 @@ import {
   GeolocationControl,
 } from "react-yandex-maps";
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 export default function YMap({ items }) {
   const map = useRef(null);
   const circle = useRef(null);
   const [ymaps, setYmaps] = useState(null);
   const [objects, setObjects] = useState([]);
+  const [radioValue, setRadioValue] = useState("organizers")
+
+  function getContent(item){
+    console.log(item.university)
+    return 10;
+  }
+
+  function getCenter(){
+
+  }
+
+  function radioChange(value){
+    console.log(value.target.value)
+    setRadioValue(value.target.value)
+  }
 
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
+      <FormControl>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        defaultValue={radioValue}
+        onChange={radioChange}
+      >
+        <FormControlLabel value="organizers" control={<Radio />} label="Организаторы" />
+        <FormControlLabel value="volunteers" control={<Radio />} label="Волонтёры" />
+        <FormControlLabel value="events" control={<Radio />} label="Мероприятия" />
+        <FormControlLabel value="vacancies" control={<Radio />} label="Вакансии" />
+        <FormControlLabel value="projects" control={<Radio />} label="Проекты" />
+        <FormControlLabel value="university" control={<Radio />} label="Количество обученных в Добро.Университете" />
+      </RadioGroup>
+    </FormControl>
       <YMaps>
         <Map
           width="100%"
@@ -41,7 +78,7 @@ export default function YMap({ items }) {
                   iconColor: "pink", // цвет иконки, можно также задавать в hex
                 }}
                 properties={{
-                  iconContent: item.iconContent, // пару символов помещается
+                  iconContent: getContent(item), // пару символов помещается
                 }}
               ></Placemark>
             );

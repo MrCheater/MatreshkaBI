@@ -18,6 +18,7 @@ class Api {
     this.express.get("/api/dashboard-1", async (req, res) => {
       res.json({
         map: {
+
           items: await new Promise((resolve, reject) => {
             this.db.all(
               `
