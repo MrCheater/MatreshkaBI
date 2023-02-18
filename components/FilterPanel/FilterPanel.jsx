@@ -38,7 +38,7 @@ export const FilterPanel = () => {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {years?.map((year) => <MenuItem value={year}>{year}</MenuItem>)}
+          {years?.map((year) => <MenuItem key={year} value={year}>{year}</MenuItem>)}
         </Select>
       </FormControl>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
