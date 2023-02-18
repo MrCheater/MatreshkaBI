@@ -22,16 +22,58 @@ export default function YMap({ items }) {
   const [radioValue, setRadioValue] = useState("organizers")
 
   function getContent(item){
-    console.log(item.university)
+    //console.log(item.coordinates)
+    switch(radioValue) {
+      case 'organizers':
+        return item.organizers
+      case 'volunteers':
+        return item.volunteers
+      case 'events':
+        return item.events
+      case 'vacancies':
+        return item.vacancies 
+      case 'projects':
+        return item.projects       
+      case 'university':
+        return item.university  
+    }
     return 10;
   }
 
-  function getCenter(){
+  function getColor(){
+    switch(radioValue) {
+      case 'organizers':
+        return 'pink'
+      case 'volunteers':
+        return 'yellow'
+      case 'events':
+        return 'blue'
+      case 'vacancies':
+        return 'red'
+      case 'projects':
+        return 'brown'      
+      case 'university':
+        return 'orange'
+  }
+}
 
+  function getCenter(){
+    if (items.length == 1){
+      return items[0].coordinates
+    }else{
+      return [66.4167, 94.2500]
+    }
+  }
+
+  function getZoom(){
+    if (items.length == 1){
+      return 8
+    }else{
+      return 2
+    }
   }
 
   function radioChange(value){
-    console.log(value.target.value)
     setRadioValue(value.target.value)
   }
 
@@ -60,8 +102,8 @@ export default function YMap({ items }) {
           instanceRef={map}
           modules={["geoQuery"]}
           state={{
-            center: [55.43, 37.75],
-            zoom: 8,
+            center: getCenter(),
+            zoom: getZoom(),
           }}
           onLoad={(ymapsInstance) => {
             setYmaps(ymapsInstance);
@@ -75,7 +117,7 @@ export default function YMap({ items }) {
                 geometry={item.coordinates}
                 options={{
                   preset: "islands#yellowStretchyIcon", // список темплейтов на сайте яндекса
-                  iconColor: "pink", // цвет иконки, можно также задавать в hex
+                  iconColor: getColor(), // цвет иконки, можно также задавать в hex
                 }}
                 properties={{
                   iconContent: getContent(item), // пару символов помещается
