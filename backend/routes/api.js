@@ -16,12 +16,10 @@ class Api {
       res.send({});
     });
     this.express.get("/api/dashboard-1", async (req, res) => {
-      res.json({
-        map: {
-
-          items: await new Promise((resolve, reject) => {
-            this.db.all(
-              `
+      const map = {
+        items: await new Promise((resolve, reject) => {
+          this.db.all(
+            `
                 SELECT * FROM read_csv_auto('data/map.csv')
                 ${
                   req.query.region
@@ -29,60 +27,82 @@ class Api {
                     : ""
                 }  
               `,
-              function (err, res) {
-                if (err) {
-                  return reject(err);
-                }
-                resolve(
-                  res.map(
-                    (
-                      {
-                        region,
-                        latitude,
-                        longitude,
-                        organizers,
-                        volunteers,
-                        events,
-                        vacancies,
-                        projects,
-                        university
-                      }
-                    ) => ({
-                      type: "Point",
-                      region,
-                      organizers,
-                      volunteers,
-                      events,
-                      vacancies,
-                      projects,
-                      university,
-                      coordinates: [latitude, longitude],
-                    })
-                  )
-                );
+            function (err, res) {
+              if (err) {
+                return reject(err);
               }
-            );
-          }),
-        },
+              resolve(
+                res.map(
+                  ({
+                    region,
+                    latitude,
+                    longitude,
+                    organizers,
+                    volunteers,
+                    events,
+                    vacancies,
+                    projects,
+                    university,
+                  }) => ({
+                    type: "Point",
+                    region,
+                    organizers,
+                    volunteers,
+                    events,
+                    vacancies,
+                    projects,
+                    university,
+                    coordinates: [latitude, longitude],
+                  })
+                )
+              );
+            }
+          );
+        }),
+      };
+
+      const people = await new Promise((resolve, reject) => {
+        this.db.all(
+          `
+                SELECT * FROM read_csv_auto('data/people.csv')
+                ${
+                  req.query.region
+                    ? `WHERE "region" = '${req.query.region}'`
+                    : ""
+                }  
+              `,
+          function (err, res) {
+            if (err) {
+              return reject(err);
+            }
+            if (res.length > 1) {
+              return resolve(null);
+            }
+            resolve(res[0]);
+          }
+        );
+      });
+
+      res.json({
+        map,
+        people,
       });
     });
     this.express.get("/api/people", async (req, res) => {
       res.send(
-        await new Promise(
-          (resolve, reject) => {
-            this.db.all(
-              `SELECT * FROM read_csv_auto('data/people.csv')`
-            , function(err, res) {
+        await new Promise((resolve, reject) => {
+          this.db.all(
+            `SELECT * FROM read_csv_auto('data/people_old.csv')`,
+            function (err, res) {
               if (err) {
                 return reject(err);
               }
-              resolve(res)
-            });
-          }
-        )
+              resolve(res);
+            }
+          );
+        })
       );
     });
-
   }
 }
 
