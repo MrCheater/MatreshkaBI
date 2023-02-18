@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-import ReactToPrint from 'react-to-print';
+import ReactToPrint from "react-to-print";
 
 import VerticalBar from "../widgets/VerticalBar";
 import HorizontalBar from "../widgets/HorizontalBar";
@@ -55,12 +55,16 @@ export default function Index() {
     <Container maxWidth="lg" ref={ref}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;500&display=swap" rel="stylesheet"></link>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Jost:wght@300;500&display=swap"
+        rel="stylesheet"
+      ></link>
       <Header />
 
       <Box sx={{ my: 4 }}>
         <Box display="flex" style={{ alignItems: "baseline" }}>
-          <FilterPanel style={{ display: "inline-block" }}
+          <FilterPanel
+            style={{ display: "inline-block" }}
             region={region}
             setRegion={setRegion}
             year={year}
@@ -71,8 +75,13 @@ export default function Index() {
             setMonth={setMonth}
           ></FilterPanel>
 
-          <ReactToPrint style={{ float: "right" }}
-            trigger={() => <Button style={{ height: 50, marginLeft: "auto" }}>Сохранить в PDF</Button>}
+          <ReactToPrint
+            style={{ float: "right" }}
+            trigger={() => (
+              <Button style={{ height: 50, marginLeft: "auto" }}>
+                Сохранить в PDF
+              </Button>
+            )}
             content={() => ref.current}
           />
         </Box>
