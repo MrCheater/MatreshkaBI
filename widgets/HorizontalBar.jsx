@@ -43,7 +43,7 @@ const dataDefault = {
   ]
 }
 
-export function HorizontalBar({ url, options }) {
+export default function HorizontalBar({ url, options }) {
   const dataDefault = {
     labels: ['Red', 'Orange', 'Blue'],
     datasets: [

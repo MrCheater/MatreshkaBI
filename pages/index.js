@@ -1,11 +1,12 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 
-import { VerticalBar } from "../widgets/VerticalBar";
-import { HorizontalBar } from "../widgets/HorizontalBar";
-import { Donut } from "../widgets/Donut";
+import VerticalBar from "../widgets/VerticalBar";
+import HorizontalBar from "../widgets/HorizontalBar";
+import Donut from "../widgets/Donut";
+import Map from "../widgets/Map";
 import Box from "@mui/material/Box";
-import { Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 
 import { FilterPanel } from "../components/FilterPanel/FilterPanel";
 
@@ -14,6 +15,9 @@ export default function Index() {
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
       <FilterPanel />
+      <Stack>
+        <Map />
+      </Stack>
       <Stack
       direction="row"
       spacing={4}>
@@ -41,7 +45,9 @@ export default function Index() {
     >
        <Donut />
     </Box>
+
       </Stack>
+
       </Box>
     </Container>
   );

@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-export function VerticalBar({ url, options }) {
+export default function VerticalBar({ url, options }) {
 
 const optionsDefault = {
   responsive: true,

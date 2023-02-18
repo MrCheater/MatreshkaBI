@@ -48,9 +48,11 @@ export default function YMap() {
           options={{ searchControlProvider: "yandex#search" }}
         >
             {
-                 POINTS.map(item => {
+                 POINTS.map((item, index) => {
                     return (
-                        <Placemark geometry={ item.coordinates }
+                        <Placemark
+                          key = {index}
+                        geometry={ item.coordinates }
                         options={
                           {
                             preset: 'islands#yellowStretchyIcon', // список темплейтов на сайте яндекса
