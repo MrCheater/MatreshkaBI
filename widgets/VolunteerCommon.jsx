@@ -8,10 +8,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export {};
 
-export default function YouthStatistics({ items }) {
+export default function VolunteerCommon({ items }) {
   
  const [dataRegion, setDataRegion] = useState(null);
- const [numberColor, setNumberColor] = useState(0);
+ const [numberColor, setNumberColor] = useState(2);
 
  const mainColors = [
     "rgba(255, 99, 132, 0.2)",
@@ -36,11 +36,11 @@ export default function YouthStatistics({ items }) {
             maintainAspectRatio: false,
             responsive: false,
             label: items?.region,
-            labels: ["Доля молодежи в общей численности", "Общая численность населения"],
+            labels: ["Доля волонтеров в общей численности", "Общая численность населения"],
             datasets: [
               {
               //  label: items?.region,
-                data: [items?.young, items?.total],
+                data: [items?.totalRange, items?.total],
                 backgroundColor:  [ mainColors[numberColor], mainColors[numberColor+1]
                   ],
                   borderColor: [
@@ -67,7 +67,7 @@ export default function YouthStatistics({ items }) {
         dataRegion === null ?<div> </div> :
     
         <Card variant="outlined" sx={{ my: 2 }}>
-        <Typography align='center'>Соотношение молодежи к общей численности населения</Typography>
+        <Typography align='center'>Соотношение волонтеров к общей численности населения</Typography>
         <Doughnut data={dataRegion} /> 
        </Card>
 

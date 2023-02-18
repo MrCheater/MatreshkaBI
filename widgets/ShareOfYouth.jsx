@@ -57,7 +57,7 @@ export default function ShareOfYouth({ items }) {
             labels: label,
             datasets: [
               {
-                label: "Доля молодежи в населении россии",
+                label: "Доля молодежи среди населения по регионам России",
                 data: dataset,
                 backgroundColor: ["rgba(53, 162, 235, 0.5)"],
                 borderWidth: 1,

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import Card from '@mui/material/Card'
 import { Typography } from '@mui/material';
-
+import Card from '@mui/material/Card'
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export {};
 
-export default function YouthStatistics({ items }) {
+export default function VolunteerRange({ items }) {
   
  const [dataRegion, setDataRegion] = useState(null);
  const [numberColor, setNumberColor] = useState(0);
@@ -36,25 +35,20 @@ export default function YouthStatistics({ items }) {
             maintainAspectRatio: false,
             responsive: false,
             label: items?.region,
-            labels: ["Доля молодежи в общей численности", "Общая численность населения"],
+            labels: ["7-13 лет", "14-30 лет", "31-54 года", "55 лет и старше"],
             datasets: [
               {
               //  label: items?.region,
-                data: [items?.young, items?.total],
-                backgroundColor:  [ mainColors[numberColor], mainColors[numberColor+1]
+                data: [items?.range_7_13, items?.range_14_30, items?.range_31_54, items?.range_55],
+                backgroundColor:  [ mainColors[numberColor], mainColors[numberColor+1], mainColors[numberColor+2], mainColors[numberColor+3]
                   ],
                   borderColor: [
-                    bordercolors[numberColor], bordercolors[numberColor+1]
+                    bordercolors[numberColor], bordercolors[numberColor+1], bordercolors[numberColor+2], bordercolors[numberColor+3]
                   ]
               }
             ]
           };
-         
-        /*  if (numberColor == 4){
-            setNumberColor(0)
-          }else{
-            setNumberColor(numberColor+1)
-          }*/
+        
           setDataRegion(data2);
         
 
@@ -65,12 +59,10 @@ export default function YouthStatistics({ items }) {
     <div>
     { 
         dataRegion === null ?<div> </div> :
-    
-        <Card variant="outlined" sx={{ my: 2 }}>
-        <Typography align='center'>Соотношение молодежи к общей численности населения</Typography>
+      <Card variant="outlined" sx={{ my: 2 }}>
+        <Typography align='center'>Возраст волонтеров</Typography>
         <Doughnut data={dataRegion} /> 
        </Card>
-
     } </div>
     );
 }

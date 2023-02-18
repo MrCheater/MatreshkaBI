@@ -14,7 +14,9 @@ import HorizontalBar from "../widgets/HorizontalBar";
 import Donut from "../widgets/Donut";
 import Map from "../widgets/Map";
 import YouthStatistics from "../widgets/YouthStatistics";
+import VolunteerRange from "../widgets/VolunteerRange";
 import ShareOfYouth from "../widgets/ShareOfYouth";
+import VolunteerCommon from "../widgets/VolunteerCommon";
 
 import { Header } from "../components/Header/Header";
 import { FilterPanel } from "../components/FilterPanel";
@@ -100,7 +102,7 @@ export default function Index() {
               height: 400,
             }}
           >
-            <VerticalBar />
+            <VolunteerCommon items={dashboardData.ageDistribution}/>
           </Box>
           <Box
             sx={{
@@ -108,7 +110,7 @@ export default function Index() {
               height: 400,
             }}
           >
-            <HorizontalBar />
+            <VolunteerRange items={dashboardData.ageDistribution}/>
           </Box>
           <Box
             sx={{
