@@ -17,6 +17,7 @@ import YouthStatistics from "../widgets/YouthStatistics";
 import VolunteerRange from "../widgets/VolunteerRange";
 import ShareOfYouth from "../widgets/ShareOfYouth";
 import VolunteerCommon from "../widgets/VolunteerCommon";
+import OrganizationRange from "../widgets/OrganizationRange";
 
 import { Header } from "../components/Header/Header";
 import { FilterPanel } from "../components/FilterPanel";
@@ -56,6 +57,17 @@ export default function Index() {
     return null;
   }
 
+  const downloadTxtFile = () => {
+    // anchor link
+    const element = document.createElement("a");
+    element.href = './../data/ageDistribution.csv'
+    element.download = "data-" + Date.now() + ".csv";
+    // simulate link click
+    document.body.appendChild(element);
+    // Required for this to work in FireFox
+    element.click();
+  };
+
   return (
     <Container maxWidth="lg" ref={ref}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -80,6 +92,9 @@ export default function Index() {
             setMonth={setMonth}
           ></FilterPanel>
 
+          <Button style={{ height: 50, marginLeft: "auto" }} onClick={downloadTxtFile}>
+                Сохранить в csv
+              </Button>
           <ReactToPrint
             style={{ float: "right" }}
             trigger={() => (
@@ -126,7 +141,14 @@ export default function Index() {
           <ShareOfYouth items={dashboardData.peopleByRegions} />
         </Stack>
       </Box>
-      <Tabs />
+      <Box>
+        <Stack direction="row" spacing={4}>
+          <Box sx={{ width: '50%' }}>
+            <Tabs />
+          </Box>
+          <OrganizationRange items={dashboardData.objectDistribution}/>
+        </Stack>
+      </Box>
     </Container>
   );
 }

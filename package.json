@@ -25,6 +25,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
+    "react-download-link": "^2.3.0",
     "react-hook-geolocation": "^1.1.0",
     "react-to-print": "^2.14.11",
     "react-yandex-maps": "^4.6.0",
