@@ -83,9 +83,25 @@ class Api {
         );
       });
 
+      const peopleByRegions = await new Promise((resolve, reject) => {
+        this.db.all(
+          `
+            SELECT region, young, total, (young*100.0)/total as "youngPercent" FROM read_csv_auto('data/people.csv')
+            ORDER BY "youngPercent"
+          `,
+          function (err, res) {
+            if (err) {
+              return reject(err);
+            }
+            resolve(res);
+          }
+        );
+      });
+
       res.json({
         map,
         people,
+        peopleByRegions
       });
     });
     this.express.get("/api/people", async (req, res) => {
