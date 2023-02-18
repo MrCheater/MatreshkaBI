@@ -121,7 +121,8 @@ export default function Index() {
             setMonth={setMonth}
           ></FilterPanel>
               <CSVLink
-                style={{ float: "right", marginLeft: "auto", "color": "#556cd6" }}
+                style={{ float: "right", marginLeft: "auto", "color": "#556cd6", "text-decoration-line": "none", "text-transform": "uppercase",
+                "font-family": "'__Roboto_f65433','__Roboto_Fallback_f65433',Helvetica,Arial,sans-serif", "font-weight": "500", "font-size": "0.875rem" }}
                 data={data_csv}
                 filename={"data.csv"}
                 className="btn btn-primary"
