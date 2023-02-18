@@ -36,15 +36,17 @@ class Api {
                 resolve(
                   res.map(
                     (
-                      region,
-                      latitude,
-                      longitude,
-                      organizers,
-                      volunteers,
-                      events,
-                      vacancies,
-                      projects,
-                      university
+                      {
+                        region,
+                        latitude,
+                        longitude,
+                        organizers,
+                        volunteers,
+                        events,
+                        vacancies,
+                        projects,
+                        university
+                      }
                     ) => ({
                       type: "Point",
                       region,
