@@ -13,6 +13,8 @@ import VerticalBar from "../widgets/VerticalBar";
 import HorizontalBar from "../widgets/HorizontalBar";
 import Donut from "../widgets/Donut";
 import Map from "../widgets/Map";
+import YouthStatistics from "../widgets/YouthStatistics";
+import ShareOfYouth from "../widgets/ShareOfYouth";
 
 import { Header } from "../components/Header/Header";
 import { FilterPanel } from "../components/FilterPanel";
@@ -90,6 +92,7 @@ export default function Index() {
         <Stack>
           <Map items={dashboardData.map.items} />
         </Stack>
+      
         <Stack direction="row" spacing={4}>
           <Box
             sx={{
@@ -113,8 +116,12 @@ export default function Index() {
               height: 400,
             }}
           >
-            <Donut />
+            <YouthStatistics items={dashboardData.people}/>
           </Box>
+
+        </Stack>          
+        <Stack>
+          <ShareOfYouth items={dashboardData.peopleByRegions} />
         </Stack>
       </Box>
       <Tabs />
