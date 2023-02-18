@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from 'react';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,19 +14,44 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 
 import Copyright from "../components/Copyright";
+import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/router'
+import Snackbar from '@mui/material/Snackbar';
+import Alert, { AlertProps } from '@mui/material/Alert';
 
 export default function SignInSide() {
+  const [cookies, setCookie] = useCookies(['name']);
+  const { push, query, isReady } = useRouter();
+  const [open, setOpen] = useState(false);;
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (data.get("password") == "1234567"){
+      setCookie('name', data.get("email"), { path: '/' });
+      push('/')
+    }else{
+      setOpen(true)
+    }
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
   };
 
+  const handleClose = () =>
+  {
+    setOpen(false);
+  };
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
+      <Snackbar anchorOrigin={{vertical: 'top', horizontal: 'right'}} open={open} autoHideDuration={2000} onClose={handleClose}>
+        <Alert severity="error" sx={{ width: '100%' }} onClose={handleClose}>
+        Неверный логин или пароль
+        </Alert>
+      </Snackbar>
       <CssBaseline />
       <Grid
         item
@@ -58,7 +84,7 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+          Личный кабинет
           </Typography>
           <Box
             component="form"
@@ -71,7 +97,7 @@ export default function SignInSide() {
               required
               fullWidth
               id="login"
-              label="Login"
+              label="Логин"
               name="login"
               autoComplete="login"
               autoFocus
@@ -81,14 +107,10 @@ export default function SignInSide() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Пароль"
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
@@ -96,20 +118,9 @@ export default function SignInSide() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Войти
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="pages#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="pages#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+           
             <Copyright sx={{ mt: 5 }} />
           </Box>
         </Box>
