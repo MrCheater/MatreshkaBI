@@ -1,53 +1,82 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 
 import VerticalBar from "../widgets/VerticalBar";
 import HorizontalBar from "../widgets/HorizontalBar";
 import Donut from "../widgets/Donut";
 import Map from "../widgets/Map";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 
-import { FilterPanel } from "../components/FilterPanel/FilterPanel";
+import { FilterPanel } from "../components/FilterPanel";
 
 export default function Index() {
+  const [region, setRegion] = useState("");
+  const [year, setYear] = useState("");
+  const [quarter, setQuarter] = useState("");
+  const [month, setMonth] = useState("");
+  const [dashboardData, setDashboardData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `/api/dashboard-1`,
+      );
+      const data = await response.json()
+
+      setDashboardData(data);
+    };
+
+    fetchData();
+  }, [region, year, quarter, month]);
+
+  if(dashboardData == null) {
+    return null
+  }
+
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
-      <FilterPanel />
-      <Stack>
-        <Map />
-      </Stack>
-      <Stack
-      direction="row"
-      spacing={4}>
-      <Box
-        sx={{
-          width: 400,
-          height: 400,
-        }}
-    >
-       <VerticalBar />
-    </Box>
-    <Box
-      sx={{
-        width: 400,
-        height: 400,
-      }}
-    >
-       <HorizontalBar />
-    </Box>
-    <Box
-      sx={{
-        width: 400,
-        height: 400,
-      }}
-    >
-       <Donut />
-    </Box>
-
-      </Stack>
-
+        <FilterPanel
+          region={region}
+          setRegion={setRegion}
+          year={year}
+          setYear={setYear}
+          quarter={quarter}
+          setQuarter={setQuarter}
+          month={month}
+          setMonth={setMonth}
+        />
+        <Stack>
+          <Map items={dashboardData.map.items}/>
+        </Stack>
+        <Stack direction="row" spacing={4}>
+          <Box
+            sx={{
+              width: 400,
+              height: 400,
+            }}
+          >
+            <VerticalBar />
+          </Box>
+          <Box
+            sx={{
+              width: 400,
+              height: 400,
+            }}
+          >
+            <HorizontalBar />
+          </Box>
+          <Box
+            sx={{
+              width: 400,
+              height: 400,
+            }}
+          >
+            <Donut />
+          </Box>
+        </Stack>
       </Box>
     </Container>
   );

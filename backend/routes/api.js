@@ -28,18 +28,35 @@ class Api {
         )
       );
     });
-    this.express.get("/api/filters", (req, res) => {
+    this.express.get("/api/dashboard-1", (req, res) => {
       res.json({
-        regions,
-        years,
-        quarters,
-        months
+        map: {
+          items: [
+            {
+              type: "Point",
+              iconContent: 10,
+              coordinates: [55.56, 37.75]
+            },
+            {
+              type: "Point",
+              iconContent:3,
+              coordinates: [55.75, 37.75]
+            },
+            {
+              type: "Point",
+              iconContent: 2,
+              coordinates: [55.1, 37.45]
+            },
+            {
+              type: "Point",
+              iconContent: 100,
+              coordinates: [55.25, 37.35]
+            }
+          ]
+        }
       });
     });
 
-    this.express.post("/api/increment", (req, res) => {
-      res.send({ i: 20 });
-    });
 
   }
 }

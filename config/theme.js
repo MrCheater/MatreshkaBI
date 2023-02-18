@@ -10,6 +10,7 @@ export const roboto = Roboto({
 });
 
 const theme = createTheme({
+  spacing: 16,
   palette: {
     background: {
       default: "#F9F9F9"
